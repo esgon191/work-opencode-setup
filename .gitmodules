@@ -4,3 +4,4 @@
 [submodule "work-opencode-skills"]
 	path = work-opencode-skills
 	url = git@github.com:esgon191/work-opencode-skills.git
+    branch = mcp
