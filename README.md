@@ -38,16 +38,17 @@ git submodule update --init --recursive
 | `GLM_API_KEY` | креды модели glm |
 | `JIRA_PERSONAL_TOKEN` | MCP-сервер Atlassian (Jira) |
 | `CONFLUENCE_PERSONAL_TOKEN` | MCP-сервер Atlassian (Confluence) |
-| `DWH_MCP_CONFIG_DIR` | опционально: каталог с `connections.yaml` для dwh-mcp (иначе ищется в корне репозитория skills и в `~/.config/opencode/`) |
+| `OPENCODE_SETUP_DIR` | Абсолютный путь к данному репозиторию на устройстве |
 
 Блок для `~/.zshrc` / прописать в терминале, где будет запущен opencode:
 
 ```sh
-# путь к конфигу opencode
+# путь к конфигу opencode, если склонировать репозиторий на рабочий стол    
 export OPENCODE_CONFIG=~/Desktop/work-opencode-setup/work-opencode-config/opencode.jsonc
 
 # креды для моделей
 export DEEPSEEK_API_KEY=
+# если GLM не доступен - удалить провайдера ecom/glm из конфига
 export GLM_API_KEY=
 
 # креды для тулов
@@ -74,31 +75,34 @@ uv run dwh-connections set-password ch_prod                # пароль ClickH
 uv run dwh-connections check ch_prod
 ```
 
-Из любой папки: `uv run --directory ~/Desktop/work-opencode-setup/work-opencode-skills dwh-connections check gp_prod`.
+Из любой папки: `uv run --directory <путь к репозиторию>/work-opencode-setup/work-opencode-skills dwh-connections check gp_prod`.
 
 ## Подключение к OpenCode
 
 В `work-opencode-config/opencode.jsonc` сервер dwh описан так:
 
 ```jsonc
-"mcp": {
-  "atlassian": {
-    "type": "local",
-    "command": ["uvx", "mcp-atlassian==0.21.1"],
-    "environment": {
-      "JIRA_URL": "https://project.samokat.ru",
-      "JIRA_PERSONAL_TOKEN": "{env:JIRA_PERSONAL_TOKEN}",
-      "CONFLUENCE_URL": "https://space.samokat.ru",
-      "CONFLUENCE_PERSONAL_TOKEN": "{env:CONFLUENCE_PERSONAL_TOKEN}",
-      "READ_ONLY_MODE": "true"
-    }
-  },
-  "dwh": {
-    "type": "local",
-    "command": ["/Users/<you>/Desktop/work-opencode-setup/work-opencode-skills/.venv/bin/dwh-mcp"],
-    "enabled": true
-  }
-}
+    "mcp": {                                                                               
+    "atlassian": {                                                                         
+      "type": "local",                                                                     
+      "command": ["uvx", "mcp-atlassian==0.21.1"],                                         
+      "environment": {                                                                     
+        "JIRA_URL": "https://project.samokat.ru",                                          
+        "JIRA_PERSONAL_TOKEN": "{env:JIRA_PERSONAL_TOKEN}",                                
+                                                                                           
+        "CONFLUENCE_URL": "https://space.samokat.ru",                                      
+        "CONFLUENCE_PERSONAL_TOKEN": "{env:CONFLUENCE_PERSONAL_TOKEN}",                    
+        "READ_ONLY_MODE": "true"                                                           
+        }                                                                                  
+      },                                                                                   
+    "dwh": {                                                                               
+      "type": "local",                                                                     
+      // "command": ["/Users/hq-fvfkjlu11wfv/Desktop/mcp/work-opencode-skills/.venv/bin/dwh-mcp"],
+      "command": ["{env:OPENCODE_SETUP_DIR}/work-opencode-setup/work-opencode-skills/.venv/bin/dwh-mcp"],
+      "enabled": true                                                                      
+    }                                                                                      
+  }                                                                                        
+
 ```
 
 Путь к `dwh-mcp` — только **абсолютный**: opencode запускает команду без shell,

@@ -9,7 +9,7 @@
 # Правки в сабмодулях (вносятся вручную в их репо)
 
 ## work-opencode-config
-1. [ ] `opencode.jsonc`: путь dwh-mcp `/Users/hq-fvfkjlu11wfv/Desktop/mcp/work-opencode-skills/.venv/bin/dwh-mcp` → `/Users/hq-fvfkjlu11wfv/Desktop/work-opencode-setup/work-opencode-skills/.venv/bin/dwh-mcp` (или через `{env:OPENCODE_SETUP_DIR}`, см. root README.md)
+1. [/] `opencode.jsonc`: путь dwh-mcp `/Users/hq-fvfkjlu11wfv/Desktop/mcp/work-opencode-skills/.venv/bin/dwh-mcp` → `/Users/hq-fvfkjlu11wfv/Desktop/work-opencode-setup/work-opencode-skills/.venv/bin/dwh-mcp` (или через `{env:OPENCODE_SETUP_DIR}`, см. root README.md)
 2. [ ] `opencode.jsonc`: удалить мёртвые permissions `~/Documents/opencode/skills/**` (из `permission.external_directory` и `permission.edit`)
 3. [ ] `README.md`: `export OPENCODE_CONFIG_DIR=~/Desktop/work-opencode-config/` → `export OPENCODE_CONFIG=~/Desktop/work-opencode-setup/work-opencode-config/opencode.jsonc` (плюс пояснение, почему не `OPENCODE_CONFIG_DIR`)
 4. [ ] `README.md`: блок env-переменных можно сократить до ссылки на перечень в root README.md
